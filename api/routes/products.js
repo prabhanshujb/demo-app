@@ -8,8 +8,13 @@ router.get('/', (req, res, next) => { //for handling request, registering diff r
     });
 });    //for regestering diff routes
 router.post('/', (req, res, next) => { 
+    const product = {
+        name: req.body.name,
+        price:req.body.price
+    };
     res.status(200).json({
-        message: 'handling the product request'
+        message: 'handling the post request',
+        createdProduct: product
     });
 }); 
 router.get('/:productId', (req, res, next) => { 
@@ -26,4 +31,14 @@ router.get('/:productId', (req, res, next) => {
     }
 }); 
 
+router.patch('/:productId', (req, res, next) => {
+    res.status(200).json({
+        message:'update the product'
+    });
+});
+router.delete('/:productId', (req, res, next)=>{
+    res.status(200).json({
+        message:'update the delete'
+    });
+});
 module.exports = router;
