@@ -5,11 +5,21 @@ const app = express(); //running the express
 
 const morgan = require("morgan");
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
 //handling cors errors
 
 const productRoutes = require('./api/routes/products');
 const ordersRoutes = require('./api/routes/orders');
+const userRoutes = require('./api/routes/user');
+
+
+const url = "mongodb://localhost:27017/node-rest-api";
+mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true});
+
+const db = mongoose.connection;
+
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({extended: false}));
@@ -31,6 +41,8 @@ app.use((req, res, next) =>{
 //handling route request
 app.use('/products', productRoutes);
 app.use('/orders', ordersRoutes);
+app.use('/user', userRoutes);
+
 
 app.use((req, res, next) => {
     const error = new Error("Not Found");
